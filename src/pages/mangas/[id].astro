@@ -1,0 +1,61 @@
+---
+import { supabase } from "../../lib/supabase";
+import Layout from "../../layouts/Layout.astro";
+import NavBar from "../../components/NavBar.astro";
+
+// Configura `getStaticPaths` para generar rutas estáticas para cada manga
+export async function getStaticPaths() {
+  // Consulta a Supabase para obtener todos los `id` de los mangas
+  const { data: books, error } = await supabase.from("books").select("id");
+
+  if (error) {
+    console.error("Error al obtener los ID de los mangas:", error);
+    return [];
+  }
+
+  // Genera y retorna un array de rutas en el formato `{ params: { id: "..." } }`
+  return books.map((book) => ({
+    params: { id: book.id.toString() },
+  }));
+}
+
+// Obtiene el `id` de los parámetros de la URL
+const { id } = Astro.params;
+
+// Consulta a Supabase para obtener los detalles del manga correspondiente al `id`
+const { data: book, error } = await supabase
+  .from("books")
+  .select("*")
+  .eq("id", id)
+  .single();
+
+if (error) {
+  console.error("Error al obtener los detalles del manga:", error);
+}
+---
+
+<Layout title={book.title}>
+  <NavBar />
+  {
+    book ? (
+      <div class="max-w-3xl mx-auto p-8">
+        <h1 class="text-3xl font-bold mb-4">{book.title}</h1>
+        <img src={book.image_url} alt={book.title} class="w-full h-auto mb-6" />
+        <p>
+          <strong>Autor:</strong> {book.author}
+        </p>
+        <p>
+          <strong>Género:</strong> {book.genre}
+        </p>
+        <p>
+          <strong>Precio:</strong> ${book.price.toFixed(2)}
+        </p>
+        <p>
+          <strong>Descripción:</strong> {book.description}
+        </p>
+      </div>
+    ) : (
+      <p>No se encontró el manga.</p>
+    )
+  }
+</Layout>

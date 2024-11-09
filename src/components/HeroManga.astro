@@ -1,0 +1,29 @@
+---
+// Importa el componente y configura Supabase
+import CardManga from "./CardManga.astro";
+import { supabase } from "../lib/supabase";
+
+// Recupera los datos de los mangas desde Supabase
+const { data: books, error } = await supabase.from("books").select("*");
+if (error) console.error("Error al obtener los libros:", error);
+
+// Parámetro para definir el límite de libros
+const { limit } = Astro.props;
+const displayedBooks = limit && limit > 0 ? books?.slice(0, limit) : books;
+---
+
+<div class="grid grid-cols-1 md:grid-cols-3 max-w-6xl md:mx-auto mx-4">
+  {
+    displayedBooks?.map((book) => (
+      <CardManga
+        id={book.id}
+        title={book.title}
+        author={book.author}
+        price={book.price}
+        genre={book.genre}
+        imageUrl={book.image_url}
+        description={book.description}
+      />
+    ))
+  }
+</div>

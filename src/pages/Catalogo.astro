@@ -1,0 +1,14 @@
+---
+import NavBar from "../components/NavBar.astro";
+import Layout from "../layouts/Layout.astro";
+import HeroManga from "../components/HeroManga.astro";
+import HeroCatalogo from "../components/HeroCatalogo.astro";
+---
+
+<Layout title="Catalogo Completo">
+  <NavBar />
+  <main>
+    <HeroCatalogo />
+    <HeroManga limit={0} />
+  </main>
+</Layout>
