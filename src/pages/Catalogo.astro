@@ -3,6 +3,7 @@ import NavBar from "../components/NavBar.astro";
 import Layout from "../layouts/Layout.astro";
 import HeroManga from "../components/HeroManga.astro";
 import HeroCatalogo from "../components/HeroCatalogo.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <Layout title="Catalogo Completo">
@@ -11,4 +12,6 @@ import HeroCatalogo from "../components/HeroCatalogo.astro";
     <HeroCatalogo />
     <HeroManga limit={0} />
   </main>
+
+  <Footer />
 </Layout>

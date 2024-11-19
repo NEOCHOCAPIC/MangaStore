@@ -15,7 +15,7 @@ const { title } = Astro.props;
     <link rel="shortcut icon" href={Icon} type="image/x-icon" />
     <title>{title}</title>
   </head>
-  <body class="bg-[#141519]">
+  <body class="bg-[#141519] flex flex-col min-h-screen">
     <slot />
   </body>
 </html>

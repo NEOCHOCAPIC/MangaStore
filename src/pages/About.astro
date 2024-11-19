@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+import NavBar from "../components/NavBar.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+---
+
+<Layout title="Sobre MangaMinimal">
+  <NavBar />
+  <main class="flex-grow">
+    <Hero />
+    <section>
+      <div class="max-w-6xl md:mx-auto mx-10 text-white text-center">
+        <h1 class="font-bold">Sobre nosotros</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente
+          dolores dolore cumque necessitatibus repellat quasi mollitia quam
+          neque esse ipsa.s
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
