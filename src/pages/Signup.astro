@@ -11,7 +11,7 @@ import Footer from "../components/Footer.astro";
       <div
         class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700"
       >
-        <form class="space-y-6" action="#">
+        <form class="space-y-6" action="/api/signup" method="POST">
           <h5 class="text-xl font-medium text-gray-900 dark:text-white">
             Create your account
           </h5>
@@ -78,3 +78,43 @@ import Footer from "../components/Footer.astro";
   </main>
   <Footer />
 </Layout>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+
+    if (!form) {
+      console.error("Formulario no encontrado");
+      return;
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+      const name = formData.get("name");
+      const email = formData.get("email");
+      const password = formData.get("password");
+
+      try {
+        const response = await fetch("/api/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, password }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          alert("Registro exitoso, por favor inicia sesión");
+          window.location.href = "/Login";
+        } else {
+          const error = await response.json();
+          alert(`Error: ${error.message}`);
+        }
+      } catch (error) {
+        console.error("Error en el registro:", error);
+      }
+    });
+  });
+</script>

@@ -162,7 +162,7 @@ let user = null;
     // Verificar que el elemento exista
     if (userLink) {
       if (user) {
-        userLink.innerHTML = `<a href="/Profile" class="hover:bg-gray-900 px-3 py-5 transition duration-150 ease-in-out">${user.name}</a>`;
+        userLink.innerHTML = `<a href="/" class="hover:bg-gray-900 px-3 py-5 transition duration-150 ease-in-out">Bienvenido ${user.name}</a>`;
       } else {
         userLink.innerHTML = `<a href="/Login" class="hover:bg-gray-900 px-3 py-5 transition duration-150 ease-in-out">
           <svg class="w-6 h-6 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
