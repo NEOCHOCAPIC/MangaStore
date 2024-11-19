@@ -11,7 +11,7 @@ import Footer from "../components/Footer.astro";
       <div
         class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700"
       >
-        <form class="space-y-6" action="/api/auth/login" method="POST">
+        <form class="space-y-6" action="/api/login" method="POST">
           <h5 class="text-xl font-medium text-gray-900 dark:text-white">
             Sign in to our platform
           </h5>
@@ -64,3 +64,36 @@ import Footer from "../components/Footer.astro";
   </main>
   <Footer />
 </Layout>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+    if (!form) {
+      console.error("Formulario no encontrado");
+      return;
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault(); // Evita la redirección predeterminada
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: form.method,
+          body: formData,
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          localStorage.setItem("user", JSON.stringify(data.user));
+          alert("Inicio de sesión exitoso");
+          window.location.href = "/"; // Redirige a otra página
+        } else {
+          const error = await response.json();
+          alert(`Error: ${error.error}`);
+        }
+      } catch (error) {
+        console.error("Error de red:", error);
+      }
+    });
+  });
+</script>
