@@ -36,7 +36,7 @@ let user = null;
         <li id="user-link"></li>
         <li>
           <a
-            href="/Cart"
+            href="/"
             class="hover:bg-gray-900 px-3 py-5 transition duration-150 ease-in-out"
             ><svg
               class="w-6 h-6 inline-block"
@@ -121,7 +121,7 @@ let user = null;
   const menuButton = document.getElementById("menu-button") as HTMLElement;
   const sidebar = document.getElementById("sidebar") as HTMLElement;
 
-  // Función para abrir y cerrar el menú lateral
+  //  abrir y cerrar el menú lateral
   function toggleSidebar(): void {
     sidebar.classList.toggle("-translate-x-full");
 
@@ -162,9 +162,25 @@ let user = null;
     // Verificar que el elemento exista
     if (userLink) {
       if (user) {
-        userLink.innerHTML = `<a href="/" class="hover:bg-gray-900 px-3 py-5 transition duration-150 ease-in-out">Bienvenido ${user.name}</a>`;
+        userLink.innerHTML = `
+        <a href="/" class="hover:bg-gray-900  transition duration-150 ease-in-out">Hola ${user.name}</a>
+        <button id="logout" class="hover:bg-gray-900 transition duration-150 ease-in-out">Logout</button>
+      `;
+
+        // Agregar funcionalidad de logout
+        const logoutButton = document.getElementById("logout");
+        if (logoutButton) {
+          logoutButton.addEventListener("click", () => {
+            // Eliminar usuario del localStorage
+            localStorage.removeItem("user");
+
+            // Redirigir al login o página de inicio
+            window.location.href = "/Login"; // O a la página principal
+          });
+        }
       } else {
-        userLink.innerHTML = `<a href="/Login" class="hover:bg-gray-900 px-3 py-5 transition duration-150 ease-in-out">
+        userLink.innerHTML = `
+        <a href="/Login" class="hover:bg-gray-900 transition duration-150 ease-in-out">
           <svg class="w-6 h-6 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
           </svg>

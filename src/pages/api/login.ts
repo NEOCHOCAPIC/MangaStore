@@ -16,7 +16,7 @@ export const POST: APIRoute = async ({ request }: { request: Request }) => {
       );
     }
 
-    // Verificar si el usuario existe en la tabla users
+    // Validar el usuario
     const { data, error } = await supabase
       .from("users")
       .select("*")
@@ -30,7 +30,7 @@ export const POST: APIRoute = async ({ request }: { request: Request }) => {
       );
     }
 
-    // Verificar si la contraseña coincide (sin bcrypt)
+    // validar la contraseña
     if (password !== data.password) {
       return new Response(
         JSON.stringify({ error: "Credenciales inválidas" }),
