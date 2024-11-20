@@ -2,6 +2,7 @@
 import { supabase } from "../../lib/supabase";
 import Layout from "../../layouts/Layout.astro";
 import NavBar from "../../components/NavBar.astro";
+import Footer from "../../components/Footer.astro";
 
 // Configura `getStaticPaths` para generar rutas estáticas para cada manga
 export async function getStaticPaths() {
@@ -36,26 +37,38 @@ if (error) {
 
 <Layout title={book.title}>
   <NavBar />
-  {
-    book ? (
-      <div class="max-w-3xl mx-auto p-8 text-white">
-        <h1 class="text-3xl font-bold mb-4 text-center pt-10">{book.title}</h1>
-        <img src={book.image_url} alt={book.title} class="w-full h-auto mb-6" />
-        <p>
-          <strong>Autor:</strong> {book.author}
-        </p>
-        <p>
-          <strong>Género:</strong> {book.genre}
-        </p>
-        <p>
-          <strong>Precio:</strong> ${book.price.toFixed(2)}
-        </p>
-        <p>
-          <strong>Descripción:</strong> {book.description}
-        </p>
-      </div>
-    ) : (
-      <p class="text-white">No se encontró el manga.</p>
-    )
-  }
+  <main class="flex-grow">
+    {
+      book ? (
+        <div class="max-w-3xl mx-auto p-8 text-white flex flex-col justify-center items-center">
+          <h1 class="text-3xl font-bold mb-4 text-center pt-10">
+            {book.title}
+          </h1>
+          <img
+            src={book.image_url}
+            alt={book.title}
+            class="w-auto h-full mb-6"
+          />
+          <p>
+            <strong>Autor:</strong> {book.author}
+          </p>
+          <p>
+            <strong>Género:</strong> {book.genre}
+          </p>
+          <p>
+            <strong>Precio:</strong> ${book.price.toFixed(2)}
+          </p>
+          <p>
+            <strong>Descripción:</strong> {book.description}
+          </p>
+          <button class="bg-black text-white rounded-lg px-4 py-2 mt-10 max-w-52">
+            Añadir al carrito
+          </button>
+        </div>
+      ) : (
+        <p class="text-white">No se encontró el manga.</p>
+      )
+    }
+  </main>
+  <Footer />
 </Layout>
