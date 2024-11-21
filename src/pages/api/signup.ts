@@ -1,6 +1,13 @@
 // api/signup.ts
+import bcrypt from 'bcrypt'
 import { supabase } from "../../lib/supabase";
 import type { APIRoute } from "astro";
+
+async function hashPassword(password: string): Promise<string> {
+  const saltRounds = 10; 
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  return hashedPassword;
+}
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -22,11 +29,13 @@ export const POST: APIRoute = async ({ request }) => {
         }
       );
     }
+    // hash de la contraseña
+    const nuevaPass= await hashPassword(password)
 
     // Insertar y obtener los datos insertados
     const { data, error } = await supabase
       .from("users")
-      .insert([{ name, email, password }])
+      .insert([{ name, email, password:nuevaPass }])
       .select()
       .single();
 
