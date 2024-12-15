@@ -3,6 +3,7 @@ import { supabase } from "../../lib/supabase";
 import Layout from "../../layouts/Layout.astro";
 import NavBar from "../../components/NavBar.astro";
 import Footer from "../../components/Footer.astro";
+import { AddToCartButton } from "../../components/addCart";
 
 // Configura `getStaticPaths` para generar rutas estáticas para cada manga
 export async function getStaticPaths() {
@@ -59,11 +60,12 @@ if (error) {
             <strong>Precio:</strong> ${book.price.toFixed(2)}
           </p>
           <p>
+            <strong>Stock:</strong> {book.stock}
+          </p>
+          <p>
             <strong>Descripción:</strong> {book.description}
           </p>
-          <button class="bg-black text-white rounded-lg px-4 py-2 mt-10 max-w-52">
-            Añadir al carrito
-          </button>
+          <AddToCartButton client:load book={book} />
         </div>
       ) : (
         <p class="text-white">No se encontró el manga.</p>
